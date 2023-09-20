@@ -1,80 +1,81 @@
-// Declarar variables
-var boton = document.getElementById('agregar');
-var lista = document.getElementById('lista');
-var boton = document.getElementById('agregarEditar');
-var data = [];
-var cant = 0;
+$(document).ready(function() {
+    var data = [];
 
-// Botones
-boton.addEventListener("click", agregar);
+    function actualizarTabla() {
+        var tabla = $("#lista tbody");
+        tabla.empty();
 
-// Funciones
-function agregar() {
-    var ID = document.getElementById('ID').value;
-    var Categoria = document.getElementById('Categoria').value;
-    var Nombre = document.getElementById('Nombre').value;
-    var Descripcion = document.getElementById('Descripcion').value;
-    var editIndex = document.getElementById('editIndex').value;
-
-    if (editIndex === "") {
-        // Agregar un nuevo producto
-        data.push({
-            "id": cant,
-            "ID": ID,
-            "Categoria": Categoria,
-            "Nombre": Nombre,
-            "Descripcion": Descripcion
-        });
-
-        var id_row = 'row' + cant;
-        var fila = '<tr id=' + id_row + '><td>' + ID + '</td><td>' + Categoria + '</td><td>' + Nombre + '</td><td>' + Descripcion + '</td><td><a href="#" class="btn btn-danger" onclick="eliminar(' + cant + ')">Eliminar</a><a href="#" class="btn btn-primary" onclick="editar(' + cant + ')">Editar</a></td></tr>';
-
-        // Agregar a la tabla
-        $("#lista tbody").append(fila);
-        cant++;
-    } else {
-        // Editar el producto existente
-        var productoEditado = data[editIndex];
-        productoEditado.ID = ID;
-        productoEditado.Categoria = Categoria;
-        productoEditado.Nombre = Nombre;
-        productoEditado.Descripcion = Descripcion;
-
-        // Actualizar la fila en la tabla
-        var filaEditada = '<td>' + ID + '</td><td>' + Categoria + '</td><td>' + Nombre + '</td><td>' + Descripcion + '</td><td><a href="#" class="btn btn-danger" onclick="eliminar(' + editIndex + ')">Eliminar</a><a href="#" class="btn btn-primary" onclick="editar(' + editIndex + ')">Editar</a></td>';
-        $("#row" + editIndex).html(filaEditada);
-
-        // Limpiar el formulario y el campo de edición
-        $("#ID").val('');
-        $("#Categoria").val('');
-        $("#Nombre").val('');
-        $("#Descripcion").val('');
-        $("#editIndex").val('');
-        $("#agregarEditar").text("Agregar");
+        for (var i = 0; i < data.length; i++) {
+            var producto = data[i];
+            var fila = `<tr data-index="${i}">
+                            <td>${producto.ID}</td>
+                            <td>${producto.Categoria}</td>
+                            <td>${producto.Nombre}</td>
+                            <td>${producto.Descripcion}</td>
+                            <td>
+                                <button class="btn btn-primary btn-editar">Editar</button>
+                                <button class="btn btn-danger btn-eliminar">Eliminar</button>
+                            </td>
+                        </tr>`;
+            tabla.append(fila);
+        }
     }
-}
 
-function eliminar(index) {
-    // Eliminar la fila de la tabla usando jQuery
-    $("#row" + index).remove();
-    // Eliminar el elemento del arreglo
-    data.splice(index, 1);
-}
-function editar(index) {
-    // Obtener los datos del producto seleccionado
-    var producto = data[index];
-    
-    // Llenar el formulario con los datos del producto
-    $("#ID").val(producto.ID);
-    $("#Categoria").val(producto.Categoria);
-    $("#Nombre").val(producto.Nombre);
-    $("#Descripcion").val(producto.Descripcion);
+    // Agregar o editar un producto
+    $("#agregarEditar").click(function() {
+        var id = $("#ID").val();
+        var categoria = $("#Categoria").val();
+        var nombre = $("#Nombre").val();
+        var descripcion = $("#Descripcion").val();
+        var editIndex = $("#editIndex").val();
 
-    // Actualizar el índice de edición
-    $("#editIndex").val(index);
-    
-    // Cambiar el texto del botón "Agregar" a "Editar"
-    $("#agregarEditar").text("Editar");
-}
+        if (editIndex === "") {
+            // Agregar nuevo producto
+            data.push({
+                ID: id,
+                Categoria: categoria,
+                Nombre: nombre,
+                Descripcion: descripcion
+            });
+        } else {
+            // Editar producto existente
+            data[editIndex].ID = id;
+            data[editIndex].Categoria = categoria;
+            data[editIndex].Nombre = nombre;
+            data[editIndex].Descripcion = descripcion;
+            $("#editIndex").val(""); // Limpiar el índice de edición
+        }
+
+        // Limpiar los campos del formulario
+        $("#ID").val("");
+        $("#Categoria").val("");
+        $("#Nombre").val("");
+        $("#Descripcion").val("");
+
+        // Actualizar la tabla
+        actualizarTabla();
+    });
+
+    // Editar producto al hacer clic en el botón "Editar"
+    $("#lista").on("click", ".btn-editar", function() {
+        var index = $(this).closest("tr").data("index");
+        var producto = data[index];
+        $("#ID").val(producto.ID);
+        $("#Categoria").val(producto.Categoria);
+        $("#Nombre").val(producto.Nombre);
+        $("#Descripcion").val(producto.Descripcion);
+        $("#editIndex").val(index); // Almacenar el índice para edición
+    });
+
+    // Eliminar producto al hacer clic en el botón "Eliminar"
+    $("#lista").on("click", ".btn-eliminar", function() {
+        var index = $(this).closest("tr").data("index");
+        data.splice(index, 1);
+        actualizarTabla();
+    });
+
+    // Inicializar la tabla
+    actualizarTabla();
+});
 
 

@@ -1,63 +1,55 @@
-body{
-    background: rgb(14, 13, 13);
-}
-#titulo{
-        
-        text-align: center;
-        font-size: 80px;
-        font-weight: 500;
-        font-style: normal;
-        color: rgb(244, 244, 248);  
-        margin: 0px; 
-        background-color: rgb(55, 8, 87);
-        width: 100%;
-        height: 100px;
-            
+body {
+    background-image: url('https://img.freepik.com/vector-gratis/ilustracion-concepto-programacion_114360-1351.jpg?w=740&t=st=1695193676~exp=1695194276~hmac=79a34d7c20525408ea1002ca06c419513b5eb6dd8f25fda5e3d61fa07fdbd3fc');
+    background-size: 30% 50%;
+    background-repeat: no-repeat;
+    background-position: 850px 400px;
+
+
 }
 
-#form{
-    background-color: rgb(55, 8, 87);
+
+#titulo {
+    text-align: center;
+    font-size: 80px;
+    font-weight: 500;
+    font-style: normal;
+    color: black;
+    margin: 0px;
+    width: 100%;
+    height: 100px;
+
+}
+
+#form {
+    font-weight: 700;
     float: left;
     width: 40%;
-    border: 3px solid white;
+    border: 1px solid black;
     margin-right: 10px;
-    padding: 10px; 
-    color:rgb(246, 247, 248);   
-    }
+    padding: 10px;
+    background-color: aliceblue;
+}
 
-    table{
-        margin: 22px;
-        border: 3px solid white;
-    }
+#lista {
+    margin-top: 23px;
+    border: 1px solid black;
+    width: 650px;
+    background-color: aliceblue;
+}
 
-    th{
-        color: white;
-        border: 3px solid white;
-        font-size: 18px;
-        font-weight: 700;
-        
-    }
-    tr, td{
-        color: white;
-        border: 3px solid white;
-        font-size: 15px;
-        font-weight: 600;
-        
-    }
-    #Cuerpo{
-        height: 500px;
-    }
-    
+th {
+    border: 3px solid black;
+    font-size: 18px;
+    font-weight: 700;
+}
 
-    footer{
-        background-color: rgb(55, 8, 87);
-        text-align: center;
-        color: white;
-        font-size: 15px;
-        font-weight: 700;
-        width: 82%;
-        height: 150px;
-        margin-left: 120px;
-        float: left;
-        padding: 20px;
-    }
+tr,
+td {
+    border: 1px solid black;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#Cuerpo {
+    height: 500px;
+}
